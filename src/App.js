@@ -1,5 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 // routes
 import Router from './routes';
 // theme
@@ -14,12 +16,13 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <ThemeProvider>
-          <ScrollToTop />
-          <StyledChart />
-
-          <Router />
-        </ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <ScrollToTop />
+            <StyledChart />
+            <Router />
+          </ThemeProvider>
+        </Provider>
       </BrowserRouter>
     </HelmetProvider>
   );

@@ -8,7 +8,7 @@ import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import ProductsPage from './pages/ProductsPage';
+import ProductsPage from './pages/product/pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import PrivateRoutes from './PrivateRoutes';
 import AuthPage from './dummy/AuthPage';
