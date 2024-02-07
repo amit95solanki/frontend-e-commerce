@@ -1,7 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // @mui
 import { Container, Stack, Typography } from '@mui/material';
+import * as actions from '../_redux/actions';
 // components
 import {
   ProductSort,
@@ -15,7 +18,27 @@ import PRODUCTS from '../../../_mock/products';
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
+  const dispatch = useDispatch();
   const [openFilter, setOpenFilter] = useState(false);
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('');
+  const [category, setCategory] = useState('');
+  const [price, setPrice] = useState('');
+
+  useEffect(() => {
+    dispatch(actions.fetchItems());
+  }, [dispatch]);
+
+  const { actionsLoading, entities, totalCount } = useSelector(
+    (state) => ({
+      actionsLoading: state.product.actionsLoading,
+      entities: state.product.entities,
+      totalCount: state.product.totalCount,
+    }),
+    shallowEqual
+  );
+
+  console.log('data', entities, totalCount);
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -25,7 +48,7 @@ export default function ProductsPage() {
     setOpenFilter(false);
   };
 
-  console.log(PRODUCTS);
+  // console.log(PRODUCTS);
 
   return (
     <>

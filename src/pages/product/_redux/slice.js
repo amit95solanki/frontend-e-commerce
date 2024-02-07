@@ -43,6 +43,7 @@ export const productSlice = createSlice({
     // findItems
     itemsFetched: (state, action) => {
       const { totalCount, entities } = action.payload;
+      console.log('slice', totalCount, entities);
       state.listLoading = false;
       state.error = null;
       state.entities = entities;

@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const resource = "/cms-managements";
+export const resource = 'http://localhost:8000/api/v1/product/all';
 
 // CREATE =>  POST: add a new item to the server
 export function createItem(data) {
@@ -23,35 +23,30 @@ export function getItemById(id) {
 
 // Method from server should return QueryResultsModel(items: any[], totalsCount: number)
 // items => filtered/sorted result
-export function findItems(queryParams) {
-  const filter = [];
-  const limit = queryParams.pageSize ? queryParams.pageSize : 10;
+// export function findItems(queryParams) {
+//   console.log('queryParams', queryParams);
+//   const filter = [];
+//   const limit = queryParams.pageSize ? queryParams.pageSize : 10;
 
-  filter.push(
-    `filter[skip]=${
-      queryParams.pageNumber > 1 ? (queryParams.pageNumber - 1) * limit : 0
-    }`
-  );
+//   filter.push(`filter[skip]=${queryParams.pageNumber > 1 ? (queryParams.pageNumber - 1) * limit : 0}`);
 
-  filter.push(`filter[limit]=${limit}`);
+//   filter.push(`filter[limit]=${limit}`);
 
-  if (queryParams.sortField && queryParams.sortField !== "") {
-    filter.push(
-      `filter[order]=${
-        queryParams.sortField
-      } ${queryParams.sortOrder.toUpperCase()}`
-    );
-  }
+//   if (queryParams.sortField && queryParams.sortField !== '') {
+//     filter.push(`filter[order]=${queryParams.sortField} ${queryParams.sortOrder.toUpperCase()}`);
+//   }
 
-  Object.entries(queryParams.filter).forEach((data, index) => {
-    filter.push(
-      `filter[where][or][${index}][${data[0]}][regexp]=/^.*${data[1]}.*$/i`
-    );
-  });
+//   Object.entries(queryParams.filter).forEach((data, index) => {
+//     filter.push(`filter[where][or][${index}][${data[0]}][regexp]=/^.*${data[1]}.*$/i`);
+//   });
 
-  const filterText = filter.join("&");
+//   const filterText = filter.join('&');
 
-  return axios.get(`${resource}${filterText !== "" ? "?" : ""}${filterText}`);
+//   return axios.get(`${resource}${filterText !== '' ? '?' : ''}${filterText}`);
+// }
+
+export function findItems() {
+  return axios.get(`${resource}`);
 }
 
 export function findSelectItems(titleField) {

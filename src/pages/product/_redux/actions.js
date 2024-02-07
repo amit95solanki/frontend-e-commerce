@@ -1,14 +1,17 @@
-import * as requestFromServer from "./crud";
-import { cmsManagementsSlice, callTypes } from "./slice";
+import * as requestFromServer from './crud';
+import { productSlice, callTypes } from './slice';
 
-const { actions } = cmsManagementsSlice;
+const { actions } = productSlice;
 
-export const fetchItems = (queryParams) => (dispatch) => {
+export const fetchItems = () => (dispatch) => {
   dispatch(actions.startCall({ callType: callTypes.list }));
   return requestFromServer
-    .findItems(queryParams)
+    .findItems()
+
     .then((response) => {
-      const { total: totalCount, data: entities } = response.data;
+      console.log(response);
+      const { totalPage: totalCount, products: entities } = response.data;
+      console.log('totalPage', totalCount, entities);
       dispatch(actions.itemsFetched({ totalCount, entities }));
     })
     .catch((error) => {
@@ -53,7 +56,7 @@ export const createItem = (data) => (dispatch) => {
   return requestFromServer
     .createItem(data)
     .then((response) => {
-      dispatch(actions.itemCreated({ data: response.data}));
+      dispatch(actions.itemCreated({ data: response.data }));
     })
     .catch((error) => {
       error.clientMessage = "Can't create Cms Management";
@@ -63,7 +66,7 @@ export const createItem = (data) => (dispatch) => {
 
 export const cloneItem = (id) => async (dispatch) => {
   dispatch(actions.startCall({ callType: callTypes.action }));
-  return await requestFromServer
+  return requestFromServer
     .cloneItem(id)
     .then((response) => {
       dispatch(actions.itemCloned({ data: response.data }));
