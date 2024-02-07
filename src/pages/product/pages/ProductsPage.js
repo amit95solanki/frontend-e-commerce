@@ -48,7 +48,7 @@ export default function ProductsPage() {
     setOpenFilter(false);
   };
 
-  // console.log(PRODUCTS);
+  console.log(PRODUCTS);
 
   return (
     <>
