@@ -5,6 +5,7 @@ import store from './redux/store';
 // routes
 import Router from './routes';
 // theme
+
 import ThemeProvider from './theme';
 // components
 import { StyledChart } from './components/chart';

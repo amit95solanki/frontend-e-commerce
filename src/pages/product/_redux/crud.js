@@ -45,7 +45,8 @@ export function getItemById(id) {
 //   return axios.get(`${resource}${filterText !== '' ? '?' : ''}${filterText}`);
 // }
 
-export function findItems() {
+export function findItems(queryParams) {
+  console.log('queryParams', queryParams);
   return axios.get(`${resource}`);
 }
 

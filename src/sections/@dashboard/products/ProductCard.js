@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 // @mui
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { Box, Card, Link, Typography, Stack, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
@@ -71,6 +71,14 @@ export default function ShopProductCard({ product }) {
             &nbsp;
             {fCurrency(price)}
           </Typography>
+        </Stack>
+        <Stack direction="row" spacing={2}>
+          <Button variant="outline" sx={{ fontSize: '12px' }}>
+            ADD TO CART
+          </Button>
+          <Button variant="outline" sx={{ fontSize: '12px' }}>
+            BUY NOW
+          </Button>
         </Stack>
       </Stack>
     </Card>

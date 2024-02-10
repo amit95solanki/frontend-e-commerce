@@ -12,37 +12,32 @@ import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
 
-// ----------------------------------------------------------------------
-
-const NAV_WIDTH = 280;
-
-const HEADER_MOBILE = 64;
-
-const HEADER_DESKTOP = 92;
-
-const StyledRoot = styled(AppBar)(({ theme }) => ({
-  ...bgBlur({ color: theme.palette.background.default }),
-  boxShadow: 'none',
-  [theme.breakpoints.up('lg')]: {
-    width: `calc(100% - ${NAV_WIDTH + 1}px)`,
-  },
-}));
-
-const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-  minHeight: HEADER_MOBILE,
-  [theme.breakpoints.up('lg')]: {
-    minHeight: HEADER_DESKTOP,
-    padding: theme.spacing(0, 5),
-  },
-}));
-
-// ----------------------------------------------------------------------
-
 Header.propTypes = {
   onOpenNav: PropTypes.func,
 };
 
-export default function Header({ onOpenNav }) {
+export default function Header({ onOpenNav, user = false }) {
+  const NAV_WIDTH = user ? 0 : 280;
+
+  const HEADER_MOBILE = 64;
+
+  const HEADER_DESKTOP = 92;
+
+  const StyledRoot = styled(AppBar)(({ theme }) => ({
+    ...bgBlur({ color: theme.palette.background.default }),
+    boxShadow: 'none',
+    [theme.breakpoints.up('lg')]: {
+      width: `calc(100% - ${NAV_WIDTH + 1}px)`,
+    },
+  }));
+
+  const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+    minHeight: HEADER_MOBILE,
+    [theme.breakpoints.up('lg')]: {
+      minHeight: HEADER_DESKTOP,
+      padding: theme.spacing(0, 5),
+    },
+  }));
   return (
     <StyledRoot>
       <StyledToolbar>

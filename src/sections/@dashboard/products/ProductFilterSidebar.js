@@ -1,3 +1,4 @@
+import * as React from 'react';
 import PropTypes from 'prop-types';
 // @mui
 import {
@@ -14,6 +15,10 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel,
+  FormControl,
+  Select,
+  FormHelperText,
+  MenuItem,
 } from '@mui/material';
 // components
 import Iconify from '../../../components/iconify';
@@ -56,6 +61,11 @@ ShopFilterSidebar.propTypes = {
 };
 
 export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFilter }) {
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <>
       <Button disableRipple color="inherit" endIcon={<Iconify icon="ic:round-filter-list" />} onClick={onOpenFilter}>
@@ -83,7 +93,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
 
         <Scrollbar>
           <Stack spacing={3} sx={{ p: 3 }}>
-            <div>
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Gender
               </Typography>
@@ -92,9 +102,23 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                   <FormControlLabel key={item} control={<Checkbox />} label={item} />
                 ))}
               </FormGroup>
-            </div>
+            </div> */}
 
             <div>
+              <FormControl sx={{ minWidth: 200 }}>
+                <Select value={age} onChange={handleChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
+                  <MenuItem value="">
+                    <em>categories</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+                {/* <FormHelperText>Without label</FormHelperText> */}
+              </FormControl>
+            </div>
+
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Category
               </Typography>
@@ -103,9 +127,9 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                   <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
                 ))}
               </RadioGroup>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Colors
               </Typography>
@@ -116,9 +140,9 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                 onChangeColor={(color) => [].includes(color)}
                 sx={{ maxWidth: 38 * 4 }}
               />
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Price
               </Typography>
@@ -127,9 +151,9 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                   <FormControlLabel key={item.value} value={item.value} control={<Radio />} label={item.label} />
                 ))}
               </RadioGroup>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Rating
               </Typography>
@@ -158,7 +182,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                   />
                 ))}
               </RadioGroup>
-            </div>
+            </div> */}
           </Stack>
         </Scrollbar>
 

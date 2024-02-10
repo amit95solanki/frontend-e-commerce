@@ -20,14 +20,14 @@ import PRODUCTS from '../../../_mock/products';
 export default function ProductsPage() {
   const dispatch = useDispatch();
   const [openFilter, setOpenFilter] = useState(false);
-  const [search, setSearch] = useState('');
-  const [sort, setSort] = useState('');
-  const [category, setCategory] = useState('');
-  const [price, setPrice] = useState('');
-
+  const [search, setSearch] = useState('a');
+  const [sort, setSort] = useState('b');
+  const [category, setCategory] = useState('c');
+  const [price, setPrice] = useState('d');
+  const [page, setPage] = useState(1);
   useEffect(() => {
-    dispatch(actions.fetchItems());
-  }, [dispatch]);
+    dispatch(actions.fetchItems({ search, sort, category, price, page }));
+  }, [dispatch, search, sort, category, price, page]);
 
   const { actionsLoading, entities, totalCount } = useSelector(
     (state) => ({
@@ -48,12 +48,12 @@ export default function ProductsPage() {
     setOpenFilter(false);
   };
 
-  console.log(PRODUCTS);
+  // console.log(PRODUCTS);
 
   return (
     <>
       <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
+        <title> Product </title>
       </Helmet>
 
       <Container>
@@ -67,8 +67,10 @@ export default function ProductsPage() {
               openFilter={openFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
+              setCategory={setCategory}
+              setPrice={setPrice}
             />
-            <ProductSort />
+            <ProductSort setSort={setSort} />
           </Stack>
         </Stack>
 
