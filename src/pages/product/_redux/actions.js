@@ -3,10 +3,10 @@ import { productSlice, callTypes } from './slice';
 
 const { actions } = productSlice;
 
-export const fetchItems = () => (dispatch) => {
+export const fetchItems = (queryParams) => (dispatch) => {
   dispatch(actions.startCall({ callType: callTypes.list }));
   return requestFromServer
-    .findItems()
+    .findItems(queryParams)
 
     .then((response) => {
       console.log(response);

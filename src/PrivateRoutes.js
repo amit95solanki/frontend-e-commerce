@@ -6,11 +6,16 @@ import UserPage from './pages/UserPage';
 import ProductsPage from './pages/product/pages/ProductsPage';
 import BlogPage from './pages/BlogPage';
 import LoginPage from './pages/LoginPage';
+import DashboardLayout from './layouts/dashboard/DashboardLayout';
 
 const PrivateRoutes = () => {
   return (
     <>
       <Routes>
+        <Route element={<DashboardLayout />}>
+          <Route path="products" element={<ProductsPage />} />
+        </Route>
+
         <Route element={<MasterLayout />}>
           {/* Redirect to Dashboard after success login/registartion */}
           <Route path="auth/*" element={<Navigate to="/dashboard" />} />
