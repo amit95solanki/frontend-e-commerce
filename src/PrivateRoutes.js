@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import DashboardAppPage from './pages/DashboardAppPage';
 import MasterLayout from './layouts/MasterLayout';
-import UserPage from './pages/UserPage';
+import UserPage from './pages/user/pages/UserPage';
 import ProductsPage from './pages/product/pages/ProductsPage';
 import BlogPage from './pages/BlogPage';
 import LoginPage from './pages/LoginPage';

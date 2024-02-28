@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // @mui
 import { Box, Card, Link, Typography, Stack, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -20,17 +20,18 @@ const StyledProductImg = styled('img')({
 
 // ----------------------------------------------------------------------
 
-ShopProductCard.propTypes = {
-  product: PropTypes.object,
-};
+// ShopProductCard.propTypes = {
+//   product: PropTypes.object,
+// };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
-
+  // const { name, cover, price, colors, status, priceSale } = product;
+  const { name, photo } = product;
+  const imageUrl = `http://localhost:8000/${photo}`;
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
+        {/* {status && (
           <Label
             variant="filled"
             color={(status === 'sale' && 'error') || 'info'}
@@ -44,8 +45,8 @@ export default function ShopProductCard({ product }) {
           >
             {status}
           </Label>
-        )}
-        <StyledProductImg alt={name} src={cover} />
+        )} */}
+        <StyledProductImg alt={name} src={imageUrl} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
@@ -55,7 +56,7 @@ export default function ShopProductCard({ product }) {
           </Typography>
         </Link>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        {/* <Stack direction="row" alignItems="center" justifyContent="space-between">
           <ColorPreview colors={colors} />
           <Typography variant="subtitle1">
             <Typography
@@ -71,15 +72,15 @@ export default function ShopProductCard({ product }) {
             &nbsp;
             {fCurrency(price)}
           </Typography>
-        </Stack>
-        <Stack direction="row" spacing={2}>
+        </Stack> */}
+        {/* <Stack direction="row" spacing={2}>
           <Button variant="outline" sx={{ fontSize: '12px' }}>
             ADD TO CART
           </Button>
           <Button variant="outline" sx={{ fontSize: '12px' }}>
             BUY NOW
           </Button>
-        </Stack>
+        </Stack> */}
       </Stack>
     </Card>
   );

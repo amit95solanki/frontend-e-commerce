@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 // @mui
 import {
   Box,
@@ -60,11 +61,22 @@ ShopFilterSidebar.propTypes = {
   onCloseFilter: PropTypes.func,
 };
 
-export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFilter }) {
-  const [age, setAge] = React.useState('');
+export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFilter, setCategory, category }) {
+  const [categoryData, setCategoryData] = React.useState([]);
+
+  React.useEffect(() => {
+    axios
+      .get('http://localhost:8000/api/v1/product/category')
+      .then((response) => {
+        setCategoryData(response.data.product);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setCategory(event.target.value);
   };
   return (
     <>
@@ -104,19 +116,24 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
               </FormGroup>
             </div> */}
 
-            <div>
-              <FormControl sx={{ minWidth: 200 }}>
-                <Select value={age} onChange={handleChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value="">
-                    <em>categories</em>
+            <FormControl sx={{ minWidth: 200 }}>
+              <Select
+                value={category}
+                onChange={handleChange}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Without label' }}
+              >
+                <MenuItem value="">
+                  <em>categories</em>
+                </MenuItem>
+                {categoryData.map((categoryItem) => (
+                  <MenuItem key={categoryItem} value={categoryItem}>
+                    {categoryItem}
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-                {/* <FormHelperText>Without label</FormHelperText> */}
-              </FormControl>
-            </div>
+                ))}
+              </Select>
+              {/* <FormHelperText>Without label</FormHelperText> */}
+            </FormControl>
 
             {/* <div>
               <Typography variant="subtitle1" gutterBottom>
