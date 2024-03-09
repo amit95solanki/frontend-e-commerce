@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
-
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // @mui
 import { Container, Stack, Typography } from '@mui/material';
+import { useDataContext } from '../../../context/globalContext';
 import * as actions from '../_redux/actions';
 // components
 import {
@@ -18,12 +18,13 @@ import PRODUCTS from '../../../_mock/products';
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
+  const { search, setSearch } = useDataContext();
   const dispatch = useDispatch();
   const [openFilter, setOpenFilter] = useState(false);
-  const [search, setSearch] = useState('a');
-  const [sort, setSort] = useState('b');
-  const [category, setCategory] = useState('c');
-  const [price, setPrice] = useState('d');
+
+  const [sort, setSort] = useState('');
+  const [category, setCategory] = useState('');
+  const [price, setPrice] = useState('');
   const [page, setPage] = useState(1);
   useEffect(() => {
     dispatch(actions.fetchItems({ search, sort, category, price, page }));
@@ -69,12 +70,13 @@ export default function ProductsPage() {
               onCloseFilter={handleCloseFilter}
               setCategory={setCategory}
               setPrice={setPrice}
+              category={category}
             />
-            <ProductSort setSort={setSort} />
+            <ProductSort setSort={setSort} sort={sort} />
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
+        <ProductList products={entities} />
         <ProductCartWidget />
       </Container>
     </>
