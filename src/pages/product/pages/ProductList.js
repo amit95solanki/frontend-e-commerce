@@ -95,7 +95,7 @@ export default function ProductList() {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
 
-  console.log(page, order, selected, orderBy, filterName, rowsPerPage);
+  //   console.log(page, order, selected, orderBy, filterName, rowsPerPage);
 
   useEffect(() => {
     dispatch(actions.fetchItems({ search, sort, category, price, page }));
