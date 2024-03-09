@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // @mui
 import {
   Card,
@@ -28,15 +29,17 @@ import Scrollbar from '../../../components/scrollbar';
 import { UserListHead, UserListToolbar } from '../../../sections/@dashboard/user';
 // mock
 import USERLIST from '../../../_mock/user';
+import * as actions from '../_redux/actions';
+import { useDataContext } from '../../../context/globalContext';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
   { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'price', label: 'Price', alignRight: false },
+  { id: 'Stock', label: 'Stock', alignRight: false },
+
   { id: 'action', label: 'Action', alignRight: false },
 ];
 
@@ -71,8 +74,8 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function UserPage() {
-  const [page, setPage] = useState(0);
+export default function ProductList() {
+  const [page, setPage] = useState(1);
 
   const [order, setOrder] = useState('asc');
 
@@ -84,7 +87,30 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  // console.log(page, order, selected, orderBy, filterName, rowsPerPage);
+  const { search, setSearch } = useDataContext();
+  const dispatch = useDispatch();
+
+  const [openFilter, setOpenFilter] = useState(false);
+  const [sort, setSort] = useState(order);
+  const [category, setCategory] = useState('');
+  const [price, setPrice] = useState('');
+
+  console.log(page, order, selected, orderBy, filterName, rowsPerPage);
+
+  useEffect(() => {
+    dispatch(actions.fetchItems({ search, sort, category, price, page }));
+  }, [dispatch, search, sort, category, price, page]);
+
+  console.log('sort', sort);
+
+  const { actionsLoading, entities, totalCount } = useSelector(
+    (state) => ({
+      actionsLoading: state.product.actionsLoading,
+      entities: state.product.entities,
+      totalCount: state.product.totalCount,
+    }),
+    shallowEqual
+  );
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -132,9 +158,17 @@ export default function UserPage() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = entities ? applySortFilter(entities, getComparator(order, orderBy), filterName) : [];
 
   const isNotFound = !filteredUsers.length && !!filterName;
+
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
+
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
 
   return (
     <>
@@ -145,15 +179,25 @@ export default function UserPage() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Product List
           </Typography>
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
+            New Product
           </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+          <UserListToolbar
+            numSelected={selected.length}
+            filterName={filterName}
+            onFilterName={handleFilterByName}
+            openFilter={openFilter}
+            onOpenFilter={handleOpenFilter}
+            onCloseFilter={handleCloseFilter}
+            setCategory={setCategory}
+            setPrice={setPrice}
+            category={category}
+          />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -168,34 +212,36 @@ export default function UserPage() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                  {filteredUsers.map((row) => {
+                    const { _id, name, photo, price, stock, category } = row;
                     const selectedUser = selected.indexOf(name) !== -1;
-
+                    const imageUrl = `http://localhost:8000/${photo}`;
                     return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                      <TableRow hover key={_id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
                           <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
+                            <Avatar alt={name} src={imageUrl} />
                             <Typography variant="subtitle2" noWrap>
-                              {name}
+                              {name.toUpperCase()}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{company}</TableCell>
+                        <TableCell align="left">{category.toUpperCase()}</TableCell>
 
-                        <TableCell align="left">{role}</TableCell>
+                        <TableCell align="left">{price}</TableCell>
 
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{stock}</TableCell>
+
+                        {/* <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
 
                         <TableCell align="left">
                           <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell align="right">
                           <Stack direction="row" spacing={0}>

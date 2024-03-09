@@ -7,6 +7,7 @@ import ProductsPage from './pages/product/pages/ProductsPage';
 import BlogPage from './pages/BlogPage';
 import LoginPage from './pages/LoginPage';
 import DashboardLayout from './layouts/dashboard/DashboardLayout';
+import ProductList from './pages/product/pages/ProductList';
 
 const PrivateRoutes = () => {
   return (
@@ -25,6 +26,8 @@ const PrivateRoutes = () => {
           <Route path="user" element={<UserPage />} />
 
           <Route path="products" element={<ProductsPage />} />
+
+          <Route path="products-list" element={<ProductList />} />
 
           <Route path="blog" element={<BlogPage />} />
 
