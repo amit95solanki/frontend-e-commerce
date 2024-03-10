@@ -95,7 +95,7 @@ export default function ProductList() {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
 
-  console.log(page, order, selected, orderBy, filterName, rowsPerPage);
+  //   console.log(page, order, selected, orderBy, filterName, rowsPerPage);
 
   useEffect(() => {
     dispatch(actions.fetchItems({ search, sort, category, price, page }));
@@ -120,7 +120,7 @@ export default function ProductList() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = entities.map((n) => n._id);
       setSelected(newSelecteds);
       return;
     }
@@ -153,7 +153,8 @@ export default function ProductList() {
 
   const handleFilterByName = (event) => {
     setPage(0);
-    setFilterName(event.target.value);
+    // setFilterName(event.target.value);
+    setSearch(event.target.value);
   };
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
@@ -173,7 +174,7 @@ export default function ProductList() {
   return (
     <>
       <Helmet>
-        <title> Admin Panel </title>
+        <title> Product List </title>
       </Helmet>
 
       <Container>
@@ -189,7 +190,7 @@ export default function ProductList() {
         <Card>
           <UserListToolbar
             numSelected={selected.length}
-            filterName={filterName}
+            filterName={search}
             onFilterName={handleFilterByName}
             openFilter={openFilter}
             onOpenFilter={handleOpenFilter}
@@ -197,6 +198,7 @@ export default function ProductList() {
             setCategory={setCategory}
             setPrice={setPrice}
             category={category}
+            setSearch={setSearch}
           />
 
           <Scrollbar>
@@ -210,6 +212,7 @@ export default function ProductList() {
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
+                  allSelect={false}
                 />
                 <TableBody>
                   {filteredUsers.map((row) => {
@@ -218,9 +221,9 @@ export default function ProductList() {
                     const imageUrl = `http://localhost:8000/${photo}`;
                     return (
                       <TableRow hover key={_id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
+                        {/* <TableCell padding="checkbox">
                           <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
