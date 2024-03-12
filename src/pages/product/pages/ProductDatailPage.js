@@ -55,8 +55,7 @@ export default function ProductDatailPage() {
             {data.map((ele) => (
               <div key={ele.id} style={{ display: 'flex' }}>
                 <div>
-                  {' '}
-                  <img src={ele.imgdata} alt="" />
+                  <img src={ele.imgdata} alt="" height={'300px'} width={'300px'} />
                 </div>
                 <div className="">
                   <Table>

@@ -36,7 +36,7 @@ import { useDataContext } from '../../../context/globalContext';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
+  { id: 'category', label: 'Category', alignRight: false },
   { id: 'price', label: 'Price', alignRight: false },
   { id: 'Stock', label: 'Stock', alignRight: false },
 
@@ -226,7 +226,7 @@ export default function ProductList() {
                         </TableCell> */}
 
                         <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
+                          <Stack direction="row" alignItems="center" spacing={2} paddingLeft={2}>
                             <Avatar alt={name} src={imageUrl} />
                             <Typography variant="subtitle2" noWrap>
                               {name.toUpperCase()}

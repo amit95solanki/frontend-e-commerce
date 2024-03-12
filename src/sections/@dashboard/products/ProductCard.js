@@ -27,7 +27,7 @@ const StyledProductImg = styled('img')({
 export default function ShopProductCard({ product }) {
   // const { name, cover, price, colors, status, priceSale } = product;
   const { name, photo } = product;
-  const imageUrl = `http://localhost:8000/${photo}`;
+  const imageUrl = `https://backend-e-commerce-amit.onrender.com/${photo}`;
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
