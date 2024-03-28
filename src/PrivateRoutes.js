@@ -8,6 +8,8 @@ import BlogPage from './pages/BlogPage';
 import LoginPage from './pages/LoginPage';
 import DashboardLayout from './layouts/dashboard/DashboardLayout';
 import ProductDatailPage from './pages/product/pages/ProductDatailPage';
+import SignupPage from './pages/auth/SignupPage';
+import ForgetPassword from './sections/auth/pages/ForgetPassword';
 // import ProductList from './pages/product/pages/ProductList';
 
 const PrivateRoutes = () => {
@@ -43,8 +45,10 @@ const PrivateRoutes = () => {
 
           <Route path="blog" element={<BlogPage />} />
 
-          {/* <Route path="login" element={<LoginPage />} /> */}
+          <Route path="login" element={<LoginPage />} />
+          <Route path="sign-up" element={<SignupPage />} />
 
+          <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="*" element={<Navigate to="/error/404" />} />
         </Route>
       </Routes>

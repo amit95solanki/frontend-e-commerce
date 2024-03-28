@@ -1,125 +1,115 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { Table } from '@mui/material';
-// import { Add, Delete } from '@mui/icons-material'; // Material-UI icons
+import * as React from 'react';
+import {
+  Typography,
+  Grid,
+  Paper,
+  Box,
+  styled,
+  Stack,
+  Button,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+} from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectItems } from '../../cart/_redux/cartSlice';
 
-export default function ProductDatailPage() {
-  const [data, setData] = useState([
-    {
-      id: 1,
-      rname: 'Massala Theoryy',
-      imgdata:
-        'https://b.zmtcdn.com/data/pictures/9/18857339/8f53919f1175c08cf0f0371b73704f9b_o2_featured_v2.jpg?output-format=webp',
-      address: 'North Indian, Biryani, Mughlai',
-      delimg: 'https://b.zmtcdn.com/data/o2_assets/0b07ef18234c6fdf9365ad1c274ae0631612687510.png?output-format=webp',
-      somedata: ' 1175 + order placed from here recently',
-      price: 350,
-      rating: '3.8',
-      arrimg: 'https://b.zmtcdn.com/data/o2_assets/4bf016f32f05d26242cea342f30d47a31595763089.png?output-format=webp',
-      qnty: 0,
-    },
-  ]);
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  // textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
+const ProductDatailPage = () => {
+  // const [selectedColor, setSelectedColor] = useState();
+  // const [selectedSize, setSelectedSize] = useState();
+  const items = useSelector(selectItems);
+  // const product = useSelector(selectProductById);
   const dispatch = useDispatch();
-  const { id } = useParams();
-  //   const history = useHistory();
+  const params = useParams();
+  // const alert = useAlert();
+  // const status = useSelector(selectProductListStatus);
 
-  const compare = () => {
-    // let comparedata = getdata.filter((e) => e.id === id);
-    // setData(comparedata);
+  const handleCart = (e) => {
+    e.preventDefault();
+    // if (items.findIndex((item) => item.product.id === product.id) < 0) {
+    //   console.log({ items, product });
+    //   const newItem = {
+    //     product: product.id,
+    //     quantity: 1,
+    //   };
+    // if (selectedColor) {
+    //   newItem.color = selectedColor;
+    // }
+    // if (selectedSize) {
+    //   newItem.size = selectedSize;
+    // }
+    //   dispatch(addToCartAsync({ item: newItem, alert }));
+    // } else {
+    //   alert.error('Item Already added');
+    // }
   };
 
-  const send = (e) => {
-    // dispatch(ADD(e));
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
-
-  const dlt = (id) => {
-    // dispatch(DLT(id));
-    // history.push('/');
-  };
-
-  const remove = (item) => {
-    // dispatch(REMOVE(item));
-  };
-
-  //   useEffect(() => {
-  //     compare();
-  //   }, [id]);
-
+  const navigate = useNavigate();
   return (
     <>
-      <div className="container mt-2">
-        <h2 className="text-center">Item Details page</h2>
-        <section className="container mt-3">
-          <div className="">
-            {data.map((ele) => (
-              <div key={ele.id} style={{ display: 'flex' }}>
-                <div>
-                  <img src={ele.imgdata} alt="" height={'300px'} width={'300px'} />
-                </div>
-                <div className="">
-                  <Table>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p>
-                            <strong>Restaurant:</strong> {ele?.rname}
-                          </p>
-                          <p>
-                            <strong>Price:</strong> {ele?.price}
-                          </p>
-                          <p>
-                            <strong>Dishes:</strong> {ele?.address}
-                          </p>
-                          <p>
-                            <strong>Total:</strong> ₹ {ele?.price * ele?.qnty}
-                          </p>
-                          <div
-                            className="mt-5 d-flex justify-content-between align-item-center"
-                            style={{ width: 100, cursor: 'pointer', background: '#ddd', color: '#111' }}
-                          >
-                            <span
-                              style={{ fontSize: 24 }}
-                              //   onClick={ele.qnty <= 1 ? () => dlt(ele.id) : () => remove(ele)}
-                            >
-                              {' '}
-                              -{' '}
-                            </span>
-                            <span style={{ fontSize: 22 }}>{ele.qnty}</span>
-                            <span
-                              style={{ fontSize: 24 }}
-                              // onClick={() => send(ele)}
-                            >
-                              {' '}
-                              +{' '}
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <p>
-                            <strong>Rating:</strong>{' '}
-                            <span
-                              style={{ background: 'green', color: '#fff', padding: '2px 5px', borderRadius: '5px' }}
-                            >
-                              {ele?.rating} ★
-                            </span>
-                          </p>
-                          <p>
-                            <strong>Order Review:</strong> <span> {ele?.somedata}</span>
-                          </p>
-                          <p>
-                            <strong>Remove :</strong> <span> {/* <Delete onClick={() => dlt(ele?.id)} /> */}</span>
-                          </p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+      <div style={{ display: 'flex', justifyContent: 'end', marginBottom: '20px' }}>
+        <Button variant="contained" sx={{ width: '150px' }} onClick={() => navigate('/products')}>
+          Back
+        </Button>
       </div>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Item>xs=8</Item>
+          </Grid>
+          <Grid item xs={6}>
+            <Item>
+              <Typography sx={{ textAlign: 'center' }}>Lorem, ipsum dolor.</Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-around', margin: '10px 0px' }}>
+                <Typography>Price</Typography>
+                <Typography>:</Typography>
+                <Typography>Rs 15000</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-around', margin: '10px 0px' }}>
+                <Typography>Price</Typography>
+                <Typography>:</Typography>
+                <Typography>Rs 15000</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'end', margin: '10px 0px' }}>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-select-small-label">Quantity</InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={age}
+                    label="Age"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Item>
+          </Grid>
+        </Grid>
+      </Box>
     </>
   );
-}
+};
+
+export default ProductDatailPage;

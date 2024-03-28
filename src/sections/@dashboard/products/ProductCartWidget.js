@@ -1,6 +1,7 @@
 // @mui
 import { styled } from '@mui/material/styles';
 import { Badge } from '@mui/material';
+import { Link } from 'react-router-dom';
 // component
 import Iconify from '../../../components/iconify';
 
@@ -33,7 +34,9 @@ export default function CartWidget() {
   return (
     <StyledRoot>
       <Badge showZero badgeContent={0} color="error" max={99}>
-        <Iconify icon="eva:shopping-cart-fill" width={24} height={24} />
+        <Link to="/product-detail">
+          <Iconify icon="eva:shopping-cart-fill" width={24} height={24} />
+        </Link>
       </Badge>
     </StyledRoot>
   );

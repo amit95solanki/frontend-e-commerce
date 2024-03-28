@@ -3,12 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import { styled } from '@mui/material/styles';
 import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
 // hooks
-import useResponsive from '../hooks/useResponsive';
+import useResponsive from '../../hooks/useResponsive';
 // components
-import Logo from '../components/logo';
-import Iconify from '../components/iconify';
+import Logo from '../../components/logo';
+import Iconify from '../../components/iconify';
 // sections
-import { LoginForm } from '../sections/auth/pages';
+import { SignupForm } from '../../sections/auth/pages';
 
 // ----------------------------------------------------------------------
 
@@ -35,18 +35,18 @@ const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
-  padding: theme.spacing(12, 0),
+  padding: theme.spacing(0, 0),
 }));
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function SignupPage() {
   const mdUp = useResponsive('up', 'md');
 
   return (
     <>
       <Helmet>
-        <title> Login | Minimal UI </title>
+        <title> Sign-Up | Macho Man Shop </title>
       </Helmet>
 
       <StyledRoot>
@@ -69,16 +69,15 @@ export default function LoginPage() {
 
         <Container maxWidth="sm">
           <StyledContent>
-            <Typography variant="h4" gutterBottom>
-              Sign In
+            <Typography variant="h6" gutterBottom>
+              Sign Up
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>
-              Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
+              <i> Macho Man Shop</i>
             </Typography>
 
-            <Stack direction="row" spacing={2}>
+            {/* <Stack direction="row" spacing={2}>
               <Button fullWidth size="large" color="inherit" variant="outlined">
                 <Iconify icon="eva:google-fill" color="#DF3E30" width={22} height={22} />
               </Button>
@@ -90,15 +89,15 @@ export default function LoginPage() {
               <Button fullWidth size="large" color="inherit" variant="outlined">
                 <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={22} height={22} />
               </Button>
-            </Stack>
+            </Stack> */}
 
-            <Divider sx={{ my: 3 }}>
+            {/* <Divider sx={{ my: 3 }}>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 OR
               </Typography>
-            </Divider>
+            </Divider> */}
 
-            <LoginForm />
+            <SignupForm />
           </StyledContent>
         </Container>
       </StyledRoot>

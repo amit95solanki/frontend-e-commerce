@@ -26,7 +26,7 @@ const StyledProductImg = styled('img')({
 
 export default function ShopProductCard({ product }) {
   // const { name, cover, price, colors, status, priceSale } = product;
-  const { name, photo } = product;
+  const { name, photo, price, stock } = product;
   const imageUrl = `https://backend-e-commerce-amit.onrender.com/${photo}`;
   return (
     <Card>
@@ -50,37 +50,13 @@ export default function ShopProductCard({ product }) {
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link color="inherit" underline="hover">
-          <Typography variant="subtitle2" noWrap>
-            {name}
-          </Typography>
-        </Link>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ margin: '0px' }}>
+          <span>{name}</span> <span style={{ fontSize: '15px', margin: '0px' }}> {` ₹ ${price}`}</span>
+        </Stack>
 
-        {/* <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
-          <Typography variant="subtitle1">
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                color: 'text.disabled',
-                textDecoration: 'line-through',
-              }}
-            >
-              {priceSale && fCurrency(priceSale)}
-            </Typography>
-            &nbsp;
-            {fCurrency(price)}
-          </Typography>
-        </Stack> */}
-        {/* <Stack direction="row" spacing={2}>
-          <Button variant="outline" sx={{ fontSize: '12px' }}>
-            ADD TO CART
-          </Button>
-          <Button variant="outline" sx={{ fontSize: '12px' }}>
-            BUY NOW
-          </Button>
-        </Stack> */}
+        <Button variant="outline" disabled={stock === 0}>
+          {stock === 0 ? <span style={{ color: 'red' }}>out of stock</span> : <span> ADD TO CART</span>}
+        </Button>
       </Stack>
     </Card>
   );
