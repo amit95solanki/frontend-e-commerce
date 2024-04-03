@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import {
   Typography,
   Grid,
@@ -25,8 +26,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ProductDatailPage = () => {
-  // const [selectedColor, setSelectedColor] = useState();
-  // const [selectedSize, setSelectedSize] = useState();
+  const [selectedColor, setSelectedColor] = React.useState();
+  const [selectedSize, setSelectedSize] = useState();
   const items = useSelector(selectItems);
   // const product = useSelector(selectProductById);
   const dispatch = useDispatch();
@@ -62,11 +63,11 @@ const ProductDatailPage = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'end', marginBottom: '20px' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'end', marginBottom: '20px' }}>
         <Button variant="contained" sx={{ width: '150px' }} onClick={() => navigate('/products')}>
           Back
         </Button>
-      </div>
+      </div> */}
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>

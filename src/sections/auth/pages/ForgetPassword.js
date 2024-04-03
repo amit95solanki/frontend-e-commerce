@@ -34,7 +34,7 @@ const ForgetPassword = () => {
       <Box sx={{ display: 'flex', justifyContent: 'end' }}>
         <Link to="/login">
           <Button variant="outlined" startIcon={<ArrowBackIcon />}>
-            Delete
+            Back
           </Button>
         </Link>
       </Box>

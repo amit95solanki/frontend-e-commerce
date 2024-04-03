@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
-import { TextField, Button, Grid, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { TextField, Button, Grid, Select, MenuItem, FormControl, InputLabel, Box } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -49,81 +50,90 @@ const Form = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              id="name"
-              name="name"
-              label="Name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              id="price"
-              name="price"
-              label="Price"
-              value={formik.values.price}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.price && Boolean(formik.errors.price)}
-              helperText={formik.touched.price && formik.errors.price}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              id="stock"
-              name="stock"
-              label="Stock"
-              value={formik.values.stock}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.stock && Boolean(formik.errors.stock)}
-              helperText={formik.touched.stock && formik.errors.stock}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <FormControl fullWidth error={formik.touched.category && Boolean(formik.errors.category)}>
-              <InputLabel id="category-label">Category</InputLabel>
-              <Select
-                labelId="category-label"
-                id="category"
-                name="category"
-                value={formik.values.category}
+    <>
+      <Box sx={{ display: 'flex', justifyContent: 'end', marginBottom: '20px' }}>
+        <Link to="/product-list">
+          <Button variant="outlined" startIcon={<ArrowBackIcon />}>
+            Back
+          </Button>
+        </Link>
+      </Box>
+      <div>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                id="name"
+                name="name"
+                label="Name"
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              >
-                <MenuItem value="">Select Category</MenuItem>
-                <MenuItem value="admin">Admin</MenuItem>
-                <MenuItem value="user">User</MenuItem>
-              </Select>
-              {formik.touched.category && formik.errors.category && (
-                <div style={{ color: 'red', fontSize: '12px' }}>{formik.errors.category}</div>
-              )}
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <div style={{ border: '1px solid gray', padding: '4px', margin: '20px' }}>
-              <input required type="file" onChange={changeImageHandler} />
-            </div>
-          </Grid>
-        </Grid>
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                id="price"
+                name="price"
+                label="Price"
+                value={formik.values.price}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.price && Boolean(formik.errors.price)}
+                helperText={formik.touched.price && formik.errors.price}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                id="stock"
+                name="stock"
+                label="Stock"
+                value={formik.values.stock}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.stock && Boolean(formik.errors.stock)}
+                helperText={formik.touched.stock && formik.errors.stock}
+              />
+            </Grid>
 
-        <Button color="primary" variant="contained" fullWidth type="submit" sx={{ marginTop: '20px' }}>
-          Submit
-        </Button>
-      </form>
-    </div>
+            <Grid item xs={6}>
+              <FormControl fullWidth error={formik.touched.category && Boolean(formik.errors.category)}>
+                <InputLabel id="category-label">Category</InputLabel>
+                <Select
+                  labelId="category-label"
+                  id="category"
+                  name="category"
+                  value={formik.values.category}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                >
+                  <MenuItem value="">Select Category</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                  <MenuItem value="user">User</MenuItem>
+                </Select>
+                {formik.touched.category && formik.errors.category && (
+                  <div style={{ color: 'red', fontSize: '12px' }}>{formik.errors.category}</div>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <div style={{ border: '1px solid gray', padding: '4px', margin: '20px' }}>
+                <input required type="file" onChange={changeImageHandler} />
+              </div>
+            </Grid>
+          </Grid>
+
+          <Button color="primary" variant="contained" fullWidth type="submit" sx={{ marginTop: '20px' }}>
+            Submit
+          </Button>
+        </form>
+      </div>
+    </>
   );
 };
 

@@ -9,12 +9,12 @@ import ShopProductCard from './ProductCard';
 //   products: PropTypes.array.isRequired,
 // };
 
-export default function ProductList({ products, ...other }) {
+export default function ProductList({ products, handleCart, ...other }) {
   return (
     <Grid container spacing={3} {...other}>
       {products?.map((product) => (
         <Grid key={product._id} item xs={12} sm={6} md={3}>
-          <ShopProductCard product={product} />
+          <ShopProductCard product={product} handleCart={handleCart} />
         </Grid>
       ))}
     </Grid>

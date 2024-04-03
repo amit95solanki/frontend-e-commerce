@@ -41,7 +41,7 @@ const PrivateRoutes = () => {
 
           <Route path="products" element={<ProductsPage />} />
 
-          {/* <Route path="products-list" element={<ProductList />} /> */}
+          <Route path="/products/:id" element={<ProductDatailPage />} />
 
           <Route path="blog" element={<BlogPage />} />
 

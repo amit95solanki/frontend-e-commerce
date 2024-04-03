@@ -9,6 +9,7 @@ function Product() {
       <Routes>
         <Route path="/" element={<ProductList />} />
         <Route path="/edit/:id" element={<Form />} />
+        <Route path="/add" element={<Form />} />
       </Routes>
     </Suspense>
   );

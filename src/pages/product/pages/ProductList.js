@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // @mui
 import {
@@ -75,6 +76,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function ProductList() {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
 
   const [order, setOrder] = useState('asc');
@@ -182,9 +184,11 @@ export default function ProductList() {
           <Typography variant="h4" gutterBottom>
             Product List
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Product
-          </Button>
+          <Link to="add">
+            <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+              New Product
+            </Button>
+          </Link>
         </Stack>
 
         <Card>
@@ -263,6 +267,7 @@ export default function ProductList() {
                               color="inherit"
                               onClick={() => {
                                 console.log('row', row);
+                                navigate(`edit/${row._id}`);
                               }}
                             >
                               <Iconify icon={'eva:edit-fill'} />

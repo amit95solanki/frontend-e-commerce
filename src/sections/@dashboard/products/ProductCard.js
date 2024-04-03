@@ -24,7 +24,7 @@ const StyledProductImg = styled('img')({
 //   product: PropTypes.object,
 // };
 
-export default function ShopProductCard({ product }) {
+export default function ShopProductCard({ product, handleCart }) {
   // const { name, cover, price, colors, status, priceSale } = product;
   const { name, photo, price, stock } = product;
   const imageUrl = `https://backend-e-commerce-amit.onrender.com/${photo}`;
@@ -54,7 +54,7 @@ export default function ShopProductCard({ product }) {
           <span>{name}</span> <span style={{ fontSize: '15px', margin: '0px' }}> {` ₹ ${price}`}</span>
         </Stack>
 
-        <Button variant="outline" disabled={stock === 0}>
+        <Button variant="outline" disabled={stock === 0} onClick={() => handleCart(product)}>
           {stock === 0 ? <span style={{ color: 'red' }}>out of stock</span> : <span> ADD TO CART</span>}
         </Button>
       </Stack>
