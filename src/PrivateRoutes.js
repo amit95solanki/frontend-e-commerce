@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import DashboardAppPage from './pages/DashboardAppPage';
 import MasterLayout from './layouts/MasterLayout';
@@ -7,14 +7,19 @@ import ProductsPage from './pages/product/pages/ProductsPage';
 import BlogPage from './pages/BlogPage';
 import LoginPage from './pages/LoginPage';
 import DashboardLayout from './layouts/dashboard/DashboardLayout';
-import ProductList from './pages/product/pages/ProductList';
+import ProductDatailPage from './pages/product/pages/ProductDatailPage';
+import SignupPage from './pages/auth/SignupPage';
+import ForgetPassword from './sections/auth/pages/ForgetPassword';
+// import ProductList from './pages/product/pages/ProductList';
 
 const PrivateRoutes = () => {
+  const ProductListPage = lazy(() => import('./pages/product/pages/index'));
   return (
     <>
       <Routes>
         <Route element={<DashboardLayout />}>
           <Route path="products" element={<ProductsPage />} />
+          <Route path="product-detail" element={<ProductDatailPage />} />
         </Route>
 
         <Route element={<MasterLayout />}>
@@ -23,21 +28,38 @@ const PrivateRoutes = () => {
           {/* Pages */}
           <Route path="dashboard" element={<DashboardAppPage />} />
 
+          <Route
+            path="product-list/*"
+            element={
+              <SuspensedView>
+                <ProductListPage />
+              </SuspensedView>
+            }
+          />
+
           <Route path="user" element={<UserPage />} />
 
           <Route path="products" element={<ProductsPage />} />
 
-          <Route path="products-list" element={<ProductList />} />
+          {/* <Route path="products-list" element={<ProductList />} /> */}
 
           <Route path="blog" element={<BlogPage />} />
 
-          {/* <Route path="login" element={<LoginPage />} /> */}
+          <Route path="login" element={<LoginPage />} />
+          <Route path="sign-up" element={<SignupPage />} />
 
+          <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="*" element={<Navigate to="/error/404" />} />
         </Route>
       </Routes>
     </>
   );
+};
+const TopBarProgress = () => {
+  return <div>Loading...</div>;
+};
+const SuspensedView = ({ children }) => {
+  return <Suspense fallback={<TopBarProgress />}>{children}</Suspense>;
 };
 
 export default PrivateRoutes;

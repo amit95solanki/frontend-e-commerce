@@ -51,6 +51,21 @@ export default function ProductsPage() {
 
   // console.log(PRODUCTS);
 
+  const handleCart = (e) => {
+    e.preventDefault();
+    // if (items.findIndex((item) => item.product.id === product.id) < 0) {
+    //   console.log({ items, product });
+    //   const newItem = {
+    //     product: product.id,
+    //     quantity: 1,
+    //   };
+
+    //   dispatch(addToCartAsync({item:newItem, alert}));
+    // } else {
+    //   alert.error('Item Already added');
+    // }
+  };
+
   return (
     <>
       <Helmet>
@@ -59,7 +74,7 @@ export default function ProductsPage() {
 
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+          <i> Macho Man Shop</i>
         </Typography>
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>

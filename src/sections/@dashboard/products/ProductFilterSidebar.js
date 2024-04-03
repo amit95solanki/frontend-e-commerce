@@ -124,7 +124,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                 inputProps={{ 'aria-label': 'Without label' }}
               >
                 <MenuItem value="">
-                  <em>categories</em>
+                  <em>All categories</em>
                 </MenuItem>
                 {categoryData.map((categoryItem) => (
                   <MenuItem key={categoryItem} value={categoryItem}>
