@@ -20,7 +20,7 @@ export function fetchItemsByUserId(id) {
 
 export function updateCart(update) {
   return new Promise((resolve) => {
-    fetch(`${process.env.LOCAL_URL}cart/${update.id}`, {
+    fetch(`http://localhost:8000/api/v1/cart/${update.id}`, {
       method: 'PATCH',
       body: JSON.stringify(update),
       headers: { 'content-type': 'application/json' },
@@ -32,7 +32,7 @@ export function updateCart(update) {
 
 export function deleteItemFromCart(itemId) {
   return new Promise((resolve) => {
-    fetch(`${process.env}cart/${itemId}`, {
+    fetch(`http://localhost:8000/api/v1/cart/${itemId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' },
     })

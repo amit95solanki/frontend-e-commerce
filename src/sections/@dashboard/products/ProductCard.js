@@ -27,7 +27,6 @@ const StyledProductImg = styled('img')({
 export default function ShopProductCard({ product, handleCart }) {
   // const { name, cover, price, colors, status, priceSale } = product;
   const { name, photo, price, stock } = product;
-  const imageUrl = `https://backend-e-commerce-amit.onrender.com/${photo}`;
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
@@ -46,7 +45,7 @@ export default function ShopProductCard({ product, handleCart }) {
             {status}
           </Label>
         )} */}
-        <StyledProductImg alt={name} src={imageUrl} />
+        <StyledProductImg alt="img" src={photo} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>

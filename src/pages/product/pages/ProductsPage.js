@@ -14,7 +14,7 @@ import {
 } from '../../../sections/@dashboard/products';
 // mock
 import PRODUCTS from '../../../_mock/products';
-import { addToCartAsync, fetchItemsByUserIdAsync, selectItems } from '../../cart/_redux/cartSlice';
+import { addToCartAsync, selectItems } from '../../cart/_redux/cartSlice';
 
 // ----------------------------------------------------------------------
 
@@ -39,12 +39,6 @@ export default function ProductsPage() {
     }),
     shallowEqual
   );
-
-  const ids = 'string';
-
-  useEffect(() => {
-    dispatch(fetchItemsByUserIdAsync(ids));
-  }, [dispatch]);
 
   console.log('data', entities, totalCount);
 

@@ -1,52 +1,89 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
-import { TextField, Button, Grid, Select, MenuItem, FormControl, InputLabel, Box } from '@mui/material';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { TextField, Button, Grid, Select, MenuItem, FormControl, InputLabel, Box, Avatar } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import axios from 'axios';
+import * as actions from '../_redux/actions';
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is required'),
   price: yup.string().required('Price is required'),
   stock: yup.string().required('Stock is required'),
   category: yup.string().required('Category is required'),
-  photo: yup.string().required('Photo is required'),
 });
 
 const Form = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [photoPrev, setPhotoPrev] = useState();
   const [photos, setPhoto] = useState();
+  const [categoryData, setCategoryData] = React.useState([]);
+  const [loading, setLoading] = useState(false);
+  React.useEffect(() => {
+    axios
+      .get('http://localhost:8000/api/v1/product/category')
+      .then((response) => {
+        setCategoryData(response.data.product);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
+  const { actionsLoading, data } = useSelector(
+    (state) => ({
+      actionsLoading: state.product.actionsLoading,
+      data: state.product.data,
+    }),
+    shallowEqual
+  );
+  console.log('data', photos);
+  const initialValues = {
+    name: '',
+    price: '',
+    stock: '',
+    category: '',
+    photo: '',
+  };
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      price: '',
-      stock: '',
-      category: '',
-      photo: photos ?? '',
-    },
+    initialValues: data?.product || initialValues,
     validationSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
       console.log('values', values);
+      handleSubmitForm(values);
       // Here you can perform any action with form data, like submitting to backend
     },
   });
 
-  const changeImageHandler = (e) => {
-    const file = e.target.files?.[0];
+  useEffect(() => {
+    dispatch(actions.fetchItem(id));
+  }, [id, dispatch]);
 
-    const reader = new FileReader();
-
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          setPhotoPrev(reader.result);
-          setPhoto(file);
-          formik.setFieldValue('photo', file); // Set the photo field value in formik
-        }
+  const handleSubmitForm = (values) => {
+    console.log('88888888', values.photo);
+    setLoading(true);
+    let newValues = {
+      ...values,
+    };
+    if (id) {
+      newValues = {
+        id,
+        ...values,
       };
+      dispatch(actions.updateItem(newValues));
+    } else {
+      dispatch(actions.createItem(newValues));
     }
+    setLoading(false);
+    backToList();
+  };
+  const backToList = () => {
+    navigate(-1);
   };
 
   return (
@@ -59,7 +96,7 @@ const Form = () => {
         </Link>
       </Box>
       <div>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} style={{ padding: '20px' }}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
@@ -112,19 +149,32 @@ const Form = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
-                  <MenuItem value="">Select Category</MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                  <MenuItem value="user">User</MenuItem>
+                  {categoryData.map((categoryItem) => (
+                    <MenuItem key={categoryItem} value={categoryItem}>
+                      {categoryItem}
+                    </MenuItem>
+                  ))}
                 </Select>
                 {formik.touched.category && formik.errors.category && (
                   <div style={{ color: 'red', fontSize: '12px' }}>{formik.errors.category}</div>
                 )}
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
-              <div style={{ border: '1px solid gray', padding: '4px', margin: '20px' }}>
-                <input required type="file" onChange={changeImageHandler} />
-              </div>
+            <Grid item xs={6}>
+              <Box sx={{ display: 'flex', gap: '10px' }}>
+                <TextField
+                  fullWidth
+                  id="photo"
+                  name="photo"
+                  label="Enter Photo Url"
+                  value={formik.values.photo}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.photo && Boolean(formik.errors.photo)}
+                  helperText={formik.touched.photo && formik.errors.photo}
+                />
+                {formik.values.photo && <Avatar alt="img" src={formik.values.photo} sx={{ marginTop: '5px' }} />}
+              </Box>
             </Grid>
           </Grid>
 

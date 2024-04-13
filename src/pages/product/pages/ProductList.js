@@ -222,7 +222,7 @@ export default function ProductList() {
                   {filteredUsers.map((row) => {
                     const { _id, name, photo, price, stock, category } = row;
                     const selectedUser = selected.indexOf(name) !== -1;
-                    const imageUrl = `http://localhost:8000/${photo}`;
+
                     return (
                       <TableRow hover key={_id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         {/* <TableCell padding="checkbox">
@@ -231,14 +231,14 @@ export default function ProductList() {
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2} paddingLeft={2}>
-                            <Avatar alt={name} src={imageUrl} />
+                            <Avatar alt="img" src={photo} />
                             <Typography variant="subtitle2" noWrap>
-                              {name.toUpperCase()}
+                              {name?.toUpperCase()}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{category.toUpperCase()}</TableCell>
+                        <TableCell align="left">{category?.toUpperCase()}</TableCell>
 
                         <TableCell align="left">{price}</TableCell>
 

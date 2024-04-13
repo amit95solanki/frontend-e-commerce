@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchItemsByUserIdAsync, selectItems } from '../../../pages/cart/_redux/cartSlice';
+import { useSelector } from 'react-redux';
+import { selectItems } from '../../../pages/cart/_redux/cartSlice';
 // component
 import Iconify from '../../../components/iconify';
 
@@ -39,7 +39,7 @@ export default function CartWidget() {
     <StyledRoot>
       {items.length > 0 ? (
         <Badge showZero badgeContent={items.length} color="error" max={99}>
-          <Link to="/product-detail">
+          <Link to="/cart">
             <Iconify icon="eva:shopping-cart-fill" width={24} height={24} />
           </Link>
         </Badge>
