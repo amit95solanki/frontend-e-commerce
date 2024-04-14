@@ -1,6 +1,6 @@
 export function addToCart(item) {
   return new Promise((resolve) => {
-    fetch('https://backend-e-commerce-amit.onrender.com/api/v1//cart', {
+    fetch(`http://localhost:8000/api/v1/cart`, {
       method: 'POST',
       body: JSON.stringify(item),
       headers: { 'content-type': 'application/json' },
@@ -10,9 +10,9 @@ export function addToCart(item) {
   });
 }
 
-export function fetchItemsByUserId() {
+export function fetchItemsByUserId(id) {
   return new Promise((resolve) => {
-    fetch('https://backend-e-commerce-amit.onrender.com/api/v1//cart')
+    fetch(`http://localhost:8000/api/v1/cart?id=${id}`)
       .then((response) => response.json())
       .then((data) => resolve({ data }));
   });
@@ -20,7 +20,7 @@ export function fetchItemsByUserId() {
 
 export function updateCart(update) {
   return new Promise((resolve) => {
-    fetch(`https://backend-e-commerce-amit.onrender.com/api/v1//cart/${update.id}`, {
+    fetch(`http://localhost:8000/api/v1/cart/${update.id}`, {
       method: 'PATCH',
       body: JSON.stringify(update),
       headers: { 'content-type': 'application/json' },
@@ -32,7 +32,7 @@ export function updateCart(update) {
 
 export function deleteItemFromCart(itemId) {
   return new Promise((resolve) => {
-    fetch(`https://backend-e-commerce-amit.onrender.com/api/v1//cart/${itemId}`, {
+    fetch(`http://localhost:8000/api/v1/cart/${itemId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' },
     })

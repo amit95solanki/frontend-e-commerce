@@ -1,7 +1,10 @@
+import React from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectItems } from '../../../pages/cart/_redux/cartSlice';
 // component
 import Iconify from '../../../components/iconify';
 
@@ -31,13 +34,18 @@ const StyledRoot = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CartWidget() {
+  const items = useSelector(selectItems);
   return (
     <StyledRoot>
-      <Badge showZero badgeContent={0} color="error" max={99}>
-        <Link to="/product-detail">
-          <Iconify icon="eva:shopping-cart-fill" width={24} height={24} />
-        </Link>
-      </Badge>
+      {items.length > 0 ? (
+        <Badge showZero badgeContent={items.length} color="error" max={99}>
+          <Link to="/cart">
+            <Iconify icon="eva:shopping-cart-fill" width={24} height={24} />
+          </Link>
+        </Badge>
+      ) : (
+        ''
+      )}
     </StyledRoot>
   );
 }

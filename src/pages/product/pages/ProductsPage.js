@@ -49,23 +49,6 @@ export default function ProductsPage() {
     setOpenFilter(false);
   };
 
-  // console.log(PRODUCTS);
-
-  const handleCart = (e) => {
-    e.preventDefault();
-    // if (items.findIndex((item) => item.product.id === product.id) < 0) {
-    //   console.log({ items, product });
-    //   const newItem = {
-    //     product: product.id,
-    //     quantity: 1,
-    //   };
-
-    //   dispatch(addToCartAsync({item:newItem, alert}));
-    // } else {
-    //   alert.error('Item Already added');
-    // }
-  };
-
   return (
     <>
       <Helmet>

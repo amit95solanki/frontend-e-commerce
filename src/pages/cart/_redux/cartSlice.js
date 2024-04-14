@@ -4,61 +4,44 @@ import { addToCart, deleteItemFromCart, fetchItemsByUserId, resetCart, updateCar
 const initialState = {
   status: 'idle',
   items: [],
-  cartLoaded: false
+  cartLoaded: false,
 };
 
-export const addToCartAsync = createAsyncThunk(
-  'cart/addToCart',
-  async ({item, alert}) => {
-    const response = await addToCart(item);
-    alert.success('Item Added to Cart');
+export const addToCartAsync = createAsyncThunk('cart/addToCart', async ({ item }) => {
+  const response = await addToCart(item);
 
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
+  // The value we return becomes the `fulfilled` action payload
+  return response.data;
+});
 
-export const fetchItemsByUserIdAsync = createAsyncThunk(
-  'cart/fetchItemsByUserId',
-  async () => {
-    const response = await fetchItemsByUserId();
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
+export const fetchItemsByUserIdAsync = createAsyncThunk('cart/fetchItemsByUserId', async (id) => {
+  const response = await fetchItemsByUserId(id);
+  // The value we return becomes the `fulfilled` action payload
+  return response.data;
+});
 
-export const updateCartAsync = createAsyncThunk(
-  'cart/updateCart',
-  async (update) => {
-    const response = await updateCart(update);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
+export const updateCartAsync = createAsyncThunk('cart/updateCart', async (update) => {
+  const response = await updateCart(update);
+  // The value we return becomes the `fulfilled` action payload
+  return response.data;
+});
 
-export const deleteItemFromCartAsync = createAsyncThunk(
-  'cart/deleteItemFromCart',
-  async (itemId) => {
-    const response = await deleteItemFromCart(itemId);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
+export const deleteItemFromCartAsync = createAsyncThunk('cart/deleteItemFromCart', async (itemId) => {
+  const response = await deleteItemFromCart(itemId);
+  // The value we return becomes the `fulfilled` action payload
+  return response.data;
+});
 
-export const resetCartAsync = createAsyncThunk(
-  'cart/resetCart',
-  async () => {
-    const response = await resetCart();
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
+export const resetCartAsync = createAsyncThunk('cart/resetCart', async () => {
+  const response = await resetCart();
+  // The value we return becomes the `fulfilled` action payload
+  return response.data;
+});
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addToCartAsync.pending, (state) => {
@@ -85,16 +68,20 @@ export const cartSlice = createSlice({
       })
       .addCase(updateCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        const index =  state.items.findIndex(item=>item.id===action.payload.id)
-        state.items[index] = action.payload;
+        const index = state.items.findIndex((item) => item._id === action.payload._id);
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
       })
       .addCase(deleteItemFromCartAsync.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(deleteItemFromCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        const index =  state.items.findIndex(item=>item.id===action.payload.id)
-        state.items.splice(index,1);
+        const index = state.items.findIndex((item) => item._id === action.payload._id);
+        if (index !== -1) {
+          state.items.splice(index, 1);
+        }
       })
       .addCase(resetCartAsync.pending, (state) => {
         state.status = 'loading';
@@ -102,7 +89,7 @@ export const cartSlice = createSlice({
       .addCase(resetCartAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.items = [];
-      })
+      });
   },
 });
 
