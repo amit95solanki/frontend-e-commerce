@@ -1,13 +1,13 @@
 // import PropTypes from 'prop-types';
 // @mui
-import { Box, Card, Link, Typography, Stack, Button } from '@mui/material';
+import { Box, Card, Stack, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
+// import { fCurrency } from '../../../utils/formatNumber';
 // components
-import Label from '../../../components/label';
-import { ColorPreview } from '../../../components/color-utils';
+// import Label from '../../../components/label';
+// import { ColorPreview } from '../../../components/color-utils';
 
 // ----------------------------------------------------------------------
 
