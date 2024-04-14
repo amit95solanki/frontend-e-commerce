@@ -8,27 +8,29 @@ import ProductsPage from './pages/product/pages/ProductsPage';
 import BlogPage from './pages/BlogPage';
 import LoginPage from './pages/LoginPage';
 import DashboardLayout from './layouts/dashboard/DashboardLayout';
-import CartPage from './pages/product/pages/CartPage';
 import SignupPage from './pages/auth/SignupPage';
 import ForgetPassword from './sections/auth/pages/ForgetPassword';
 import { fetchItemsByUserIdAsync } from './pages/cart/_redux/cartSlice';
+import DetailView from './pages/product/pages/component/DetailView';
+import Cart from './pages/cart/_redux/pages/Cart';
 
 // import ProductList from './pages/product/pages/ProductList';
 
 const PrivateRoutes = () => {
   const dispatch = useDispatch();
   const ids = 'string';
+  const ProductListPage = lazy(() => import('./pages/product/pages/index'));
 
   useEffect(() => {
     dispatch(fetchItemsByUserIdAsync(ids));
   }, [dispatch]);
-  const ProductListPage = lazy(() => import('./pages/product/pages/index'));
   return (
     <>
       <Routes>
         <Route element={<DashboardLayout />}>
           <Route path="products" element={<ProductsPage />} />
-          <Route path="cart" element={<CartPage />} />
+          <Route path="products/:id" element={<DetailView />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
 
         <Route element={<MasterLayout />}>
@@ -49,8 +51,6 @@ const PrivateRoutes = () => {
           <Route path="user" element={<UserPage />} />
 
           <Route path="products" element={<ProductsPage />} />
-
-          <Route path="/products/:id" element={<CartPage />} />
 
           <Route path="blog" element={<BlogPage />} />
 

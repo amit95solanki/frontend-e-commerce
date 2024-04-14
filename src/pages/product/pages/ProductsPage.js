@@ -14,7 +14,6 @@ import {
 } from '../../../sections/@dashboard/products';
 // mock
 import PRODUCTS from '../../../_mock/products';
-import { addToCartAsync, selectItems } from '../../cart/_redux/cartSlice';
 
 // ----------------------------------------------------------------------
 
@@ -50,24 +49,6 @@ export default function ProductsPage() {
     setOpenFilter(false);
   };
 
-  const items = useSelector(selectItems);
-  // console.log('items: 123', items);
-
-  const handleCart = (product) => {
-    const isPresent = items.some((item) => item.product._id === product._id);
-    if (!isPresent) {
-      const newItem = {
-        product: product._id,
-        quantity: 1,
-        user: 'string',
-      };
-      dispatch(addToCartAsync({ item: newItem }));
-      alert('items add successfully');
-    } else {
-      alert('Item Already added');
-    }
-  };
-
   return (
     <>
       <Helmet>
@@ -93,7 +74,7 @@ export default function ProductsPage() {
           </Stack>
         </Stack>
 
-        <ProductList products={entities} handleCart={handleCart} />
+        <ProductList products={entities} />
         <ProductCartWidget />
       </Container>
     </>
