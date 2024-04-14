@@ -10,12 +10,10 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  Checkbox,
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
-  FormLabel,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
@@ -39,10 +37,6 @@ export default function SignupForm() {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-  };
-
-  const handleClick = () => {
-    navigate('/dashboard', { replace: true });
   };
 
   const formik = useFormik({
