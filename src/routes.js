@@ -11,9 +11,10 @@ import Page404 from './pages/Page404';
 import ProductsPage from './pages/product/pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import PrivateRoutes from './PrivateRoutes';
-import AuthPage from './dummy/AuthPage';
+
 import ErrorsPage from './dummy/ErrorsPage';
 import Logout from './dummy/Logout';
+import AuthPage from './layouts/dashboard/DashboardLayout';
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +60,7 @@ import Logout from './dummy/Logout';
 // }
 
 export default function Router() {
-  const currentUser = true;
+  const currentUser = false;
   return (
     <Routes>
       {currentUser ? (
@@ -69,8 +70,8 @@ export default function Router() {
         </>
       ) : (
         <>
-          <Route path="auth/*" element={<LoginPage />} />
-          <Route path="*" element={<Navigate to="/auth/login" />} />
+          <Route path="macho-man-shop/*" element={<AuthPage />} />
+          <Route path="*" element={<Navigate to="/macho-man-shop/products" />} />
         </>
       )}
       <Route path="error/*" element={<ErrorsPage />} />

@@ -27,15 +27,9 @@ const PrivateRoutes = () => {
   return (
     <>
       <Routes>
-        <Route element={<DashboardLayout />}>
-          <Route path="products" element={<ProductsPage />} />
-          <Route path="products/:id" element={<DetailView />} />
-          <Route path="cart" element={<Cart />} />
-        </Route>
-
         <Route element={<MasterLayout />}>
           {/* Redirect to Dashboard after success login/registartion */}
-          <Route path="auth/*" element={<Navigate to="/dashboard" />} />
+          <Route path="macho-man-shop/*" element={<Navigate to="/dashboard" />} />
           {/* Pages */}
           <Route path="dashboard" element={<DashboardAppPage />} />
 
@@ -50,12 +44,7 @@ const PrivateRoutes = () => {
 
           <Route path="user" element={<UserPage />} />
 
-          <Route path="products" element={<ProductsPage />} />
-
           <Route path="blog" element={<BlogPage />} />
-
-          <Route path="login" element={<LoginPage />} />
-          <Route path="sign-up" element={<SignupPage />} />
 
           <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="*" element={<Navigate to="/error/404" />} />

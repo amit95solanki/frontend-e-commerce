@@ -32,7 +32,7 @@ const ActionItem = ({ product, handleCart }) => {
   const navigate = useNavigate();
   const { id } = product;
 
-  const [quantity, setQuantity] = useState(1);
+
   const dispatch = useDispatch();
 
   //   const buyNow = async () => {
