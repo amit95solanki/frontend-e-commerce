@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import jwt from 'jwt-decode';
 // @mui
-import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import AuthContext from '../../../context/AuthProvider';
 import { login } from '../../../pages/auth/core/_request';
 import Iconify from '../../../components/iconify';
 
@@ -17,6 +19,7 @@ const validationSchema = yup.object({
 });
 
 export default function LoginForm() {
+  const { authTokens, setUser, setAuthTokens, user } = React.useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -31,6 +34,10 @@ export default function LoginForm() {
       login(newUser)
         .then(({ data }) => {
           console.log(data);
+          setAuthTokens(data.accessToken);
+          setUser(jwt(data.accessToken));
+          localStorage.setItem('authTokens', JSON.stringify(data));
+          //   history.push('/');
         })
         .catch((err) => {
           console.log(err);
@@ -75,6 +82,10 @@ export default function LoginForm() {
               ),
             }}
           />
+        </Stack>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+          <Checkbox name="remember" label="Remember me" />
+          <Link to="/macho-man-shop/forget-password">Forgot password?</Link>
         </Stack>
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained">

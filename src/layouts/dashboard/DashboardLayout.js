@@ -5,11 +5,13 @@ import { styled } from '@mui/material/styles';
 //
 import Header from './header';
 import Nav from './nav';
-import LoginPage from '../../pages/LoginPage';
+import LoginPage from '../../pages/auth/LoginPage';
 import SignupPage from '../../pages/auth/SignupPage';
+import EmailVerifyPage from '../../pages/auth/EmailVerifyPage';
 import ProductsPage from '../../pages/product/pages/ProductsPage';
 import DetailView from '../../pages/product/pages/component/DetailView';
-import EmailVerify from '../../sections/auth/pages/EmailVerify';
+import UpdatePassword from '../../sections/auth/UpdatePassword';
+import ForgetPassword from '../../sections/auth/pages/ForgetPassword';
 
 // ----------------------------------------------------------------------
 
@@ -58,10 +60,12 @@ function DashboardLayout() {
 const AuthPage = () => (
   <Routes>
     <Route element={<DashboardLayout />}>
-      <Route path="email" element={<EmailVerify />} />
+      <Route path="email" element={<EmailVerifyPage />} />
       <Route path="login" element={<LoginPage />} />
+      <Route path="forget-password" element={<ForgetPassword />} />
       <Route path="sign-up/:emails" element={<SignupPage />} />
       <Route path="products" element={<ProductsPage />} />
+      <Route path="update-password/:token" element={<UpdatePassword />} />
       <Route path="/products/:id" element={<DetailView />} />
       <Route index element={<ProductsPage />} />
     </Route>

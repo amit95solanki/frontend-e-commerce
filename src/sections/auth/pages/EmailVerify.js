@@ -5,9 +5,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 // @mui
-import { Stack, TextField, Box, Button, Alert } from '@mui/material';
+import { Stack, TextField, Box, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // ----------------------------------------------------------------------
 
@@ -39,41 +38,33 @@ const EmailVerify = () => {
   });
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-        <Button variant="outlined" startIcon={<ArrowBackIcon />}>
-          Back
-        </Button>
-      </Box>
       <form onSubmit={formik.handleSubmit}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10%' }}>
-          <Stack direction={'column'} spacing={2}>
-            {open ? (
-              <Alert icon={false} severity="success">
-                Please check your email .
-              </Alert>
-            ) : (
-              <TextField
-                sx={{ width: '50ch' }}
-                id="email"
-                name="email"
-                label="Email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            )}
-
-            {open ? (
-              ''
-            ) : (
-              <LoadingButton sx={{ m: 1, width: '50ch' }} size="large" type="submit" variant="contained">
-                send
-              </LoadingButton>
-            )}
-          </Stack>
-        </Box>
+        <Stack spacing={2} sx={{ marginBottom: '20px' }}>
+          {open ? (
+            <Alert icon={false} severity="success">
+              Please check your email .
+            </Alert>
+          ) : (
+            <TextField
+              fullWidth
+              id="email"
+              name="email"
+              label="Email Name"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+          )}
+        </Stack>
+        {open ? (
+          ''
+        ) : (
+          <LoadingButton fullWidth size="large" type="submit" variant="contained">
+            Login
+          </LoadingButton>
+        )}
       </form>
     </>
   );

@@ -1,4 +1,4 @@
-// import { Navigate, useRoutes } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
@@ -6,7 +6,7 @@ import SimpleLayout from './layouts/simple';
 //
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/user/pages/UserPage';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/auth/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/product/pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
@@ -15,6 +15,7 @@ import PrivateRoutes from './PrivateRoutes';
 import ErrorsPage from './dummy/ErrorsPage';
 import Logout from './dummy/Logout';
 import AuthPage from './layouts/dashboard/DashboardLayout';
+import AuthContext from './context/AuthProvider';
 
 // ----------------------------------------------------------------------
 
@@ -60,10 +61,11 @@ import AuthPage from './layouts/dashboard/DashboardLayout';
 // }
 
 export default function Router() {
-  const currentUser = false;
+  const { user } = useContext(AuthContext);
+
   return (
     <Routes>
-      {currentUser ? (
+      {user ? (
         <>
           <Route path="/*" element={<PrivateRoutes />} />
           <Route index element={<Navigate to="/dashboard" />} />

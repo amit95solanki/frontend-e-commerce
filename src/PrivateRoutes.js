@@ -6,7 +6,7 @@ import MasterLayout from './layouts/MasterLayout';
 import UserPage from './pages/user/pages/UserPage';
 import ProductsPage from './pages/product/pages/ProductsPage';
 import BlogPage from './pages/BlogPage';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/auth/LoginPage';
 import DashboardLayout from './layouts/dashboard/DashboardLayout';
 import SignupPage from './pages/auth/SignupPage';
 import ForgetPassword from './sections/auth/pages/ForgetPassword';

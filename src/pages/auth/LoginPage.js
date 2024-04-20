@@ -1,14 +1,15 @@
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
+import { Container, Typography, Divider, Stack, Button } from '@mui/material';
 // hooks
-import useResponsive from '../hooks/useResponsive';
+import useResponsive from '../../hooks/useResponsive';
 // components
-import Logo from '../components/logo';
-import Iconify from '../components/iconify';
+import Logo from '../../components/logo';
+import Iconify from '../../components/iconify';
 // sections
-import { LoginForm } from '../sections/auth/pages';
+import { LoginForm } from '../../sections/auth/pages';
 
 // ----------------------------------------------------------------------
 
@@ -75,7 +76,7 @@ export default function LoginPage() {
 
             <Typography variant="body2" sx={{ mb: 5 }}>
               Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
+              <Link to="/macho-man-shop/email">Get started</Link>
             </Typography>
 
             <Stack direction="row" spacing={2}>
