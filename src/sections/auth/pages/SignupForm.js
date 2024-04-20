@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
+import CryptoJS from 'crypto-js';
+
 import * as yup from 'yup';
 // @mui
 import {
@@ -14,6 +16,7 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
+  Alert,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { register } from '../../../pages/auth/core/_request';
@@ -35,12 +38,51 @@ export default function SignupForm() {
   const navigate = useNavigate();
   const { emails } = useParams();
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const decryptString = (cipherText, secretKey) => {
+    try {
+      const adjustedCipherText = cipherText.replace(/_/g, '/'); // Replace '_' with '/'
+      const bytes = CryptoJS.AES.decrypt(adjustedCipherText, secretKey);
+      const originalText = bytes.toString(CryptoJS.enc.Utf8);
+      return originalText;
+    } catch (error) {
+      console.error('Decryption error:', error.message);
+      return null;
+    }
+  };
+
+  const secretKey = 'jaishreeram'; // Same secret key used for encryption
+
+  const decryptedText = decryptString(emails, secretKey);
+
+  useEffect(() => {
+    let timer;
+
+    if (!decryptedText) {
+      setErrorMessage('Eamil is wrong & please try again');
+      timer = setTimeout(() => {
+        setErrorMessage('');
+        navigate('/macho-man-shop/email');
+      }, 3500);
+    } else {
+      // Clear any previous error messages when decryption succeeds
+      setErrorMessage('');
+    }
+
+    // Cleanup function
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [decryptedText, navigate]);
 
   const formik = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
-      email: emails,
+      email: decryptedText || '',
       password: '',
       dob: '',
       gender: '',
@@ -49,12 +91,25 @@ export default function SignupForm() {
     onSubmit: (values) => {
       const newUser = values;
       console.log('newUser', newUser);
-      register(newUser);
+      register(newUser)
+        .then(({ data }) => {
+          console.log(data);
+          navigate('/macho-man-shop/login');
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate('/macho-man-shop/email');
+        });
     },
   });
 
   return (
     <>
+      {errorMessage && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errorMessage}
+        </Alert>
+      )}
       <form onSubmit={formik.handleSubmit}>
         <Stack spacing={2}>
           <TextField
