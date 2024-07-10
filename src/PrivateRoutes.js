@@ -6,7 +6,7 @@ import MasterLayout from './layouts/MasterLayout';
 import UserPage from './pages/user/pages/UserPage';
 import ProductsPage from './pages/product/pages/ProductsPage';
 import BlogPage from './pages/BlogPage';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/auth/LoginPage';
 import DashboardLayout from './layouts/dashboard/DashboardLayout';
 import SignupPage from './pages/auth/SignupPage';
 import ForgetPassword from './sections/auth/pages/ForgetPassword';
@@ -27,15 +27,9 @@ const PrivateRoutes = () => {
   return (
     <>
       <Routes>
-        <Route element={<DashboardLayout />}>
-          <Route path="products" element={<ProductsPage />} />
-          <Route path="products/:id" element={<DetailView />} />
-          <Route path="cart" element={<Cart />} />
-        </Route>
-
         <Route element={<MasterLayout />}>
           {/* Redirect to Dashboard after success login/registartion */}
-          <Route path="auth/*" element={<Navigate to="/dashboard" />} />
+          <Route path="macho-man-shop/*" element={<Navigate to="/dashboard" />} />
           {/* Pages */}
           <Route path="dashboard" element={<DashboardAppPage />} />
 
@@ -50,12 +44,7 @@ const PrivateRoutes = () => {
 
           <Route path="user" element={<UserPage />} />
 
-          <Route path="products" element={<ProductsPage />} />
-
           <Route path="blog" element={<BlogPage />} />
-
-          <Route path="login" element={<LoginPage />} />
-          <Route path="sign-up" element={<SignupPage />} />
 
           <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="*" element={<Navigate to="/error/404" />} />

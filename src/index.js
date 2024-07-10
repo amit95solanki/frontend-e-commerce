@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 /**
  *
- * @see https://github.com/axios/axios#interceptors
+ *
  */
 
 // _redux.setupAxios(

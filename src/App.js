@@ -11,6 +11,7 @@ import ThemeProvider from './theme';
 // components
 import { StyledChart } from './components/chart';
 import ScrollToTop from './components/scroll-to-top';
+import { AuthProvider } from './context/AuthProvider';
 
 // ----------------------------------------------------------------------
 
@@ -19,13 +20,15 @@ export default function App() {
     <HelmetProvider>
       <BrowserRouter>
         <Provider store={store}>
-          <DataProvider>
-            <ThemeProvider>
-              <ScrollToTop />
-              <StyledChart />
-              <Router />
-            </ThemeProvider>
-          </DataProvider>
+          <AuthProvider>
+            <DataProvider>
+              <ThemeProvider>
+                <ScrollToTop />
+                <StyledChart />
+                <Router />
+              </ThemeProvider>
+            </DataProvider>
+          </AuthProvider>
         </Provider>
       </BrowserRouter>
     </HelmetProvider>

@@ -60,7 +60,7 @@ export default function ShopProductCard({ product, handleCart }) {
         <Button
           variant="outline"
           disabled={stock === 0}
-          onClick={() => navigate(`/products/${_id}`, { replace: false })}
+          onClick={() => navigate(`/macho-man-shop/products/${_id}`, { replace: false })}
         >
           {stock === 0 ? <span style={{ color: 'red' }}>out of stock</span> : <span> View</span>}
         </Button>

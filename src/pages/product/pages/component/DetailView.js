@@ -24,6 +24,7 @@ const Container = styled(Grid)(({ theme }) => ({
 }));
 
 const RightContainer = styled(Grid)`
+  padding: 0px 20px;
   margin-top: 50px;
   & > p {
     margin-top: 10px;
@@ -49,13 +50,13 @@ const DetailView = () => {
     shallowEqual
   );
   const items = useSelector(selectItems);
-  console.log('data', data);
+  console.log('data', items);
 
-  const loading = false;
   const product = data?.product;
 
   const handleCart = (product) => {
-    const isPresent = items.some((item) => item.product._id === product._id);
+    const isPresent = items.some((item) => item.product === product._id);
+
     if (!isPresent) {
       const newItem = {
         product: product._id,

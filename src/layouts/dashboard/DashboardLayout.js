@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Routes, Route } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 //
 import Header from './header';
 import Nav from './nav';
+import LoginPage from '../../pages/auth/LoginPage';
+import SignupPage from '../../pages/auth/SignupPage';
+import EmailVerifyPage from '../../pages/auth/EmailVerifyPage';
+import ProductsPage from '../../pages/product/pages/ProductsPage';
+import DetailView from '../../pages/product/pages/component/DetailView';
+import UpdatePassword from '../../sections/auth/UpdatePassword';
+import ForgetPassword from '../../sections/auth/pages/ForgetPassword';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +39,7 @@ const Main = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function DashboardLayout() {
+function DashboardLayout() {
   const [open, setOpen] = useState(false);
 
   const user = true;
@@ -49,3 +56,20 @@ export default function DashboardLayout() {
     </StyledRoot>
   );
 }
+
+const AuthPage = () => (
+  <Routes>
+    <Route element={<DashboardLayout />}>
+      <Route path="email" element={<EmailVerifyPage />} />
+      <Route path="login" element={<LoginPage />} />
+      <Route path="forget-password" element={<ForgetPassword />} />
+      <Route path="sign-up/:emails" element={<SignupPage />} />
+      <Route path="products" element={<ProductsPage />} />
+      <Route path="update-password/:token" element={<UpdatePassword />} />
+      <Route path="/products/:id" element={<DetailView />} />
+      <Route index element={<ProductsPage />} />
+    </Route>
+  </Routes>
+);
+
+export default AuthPage;
