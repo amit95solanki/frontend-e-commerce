@@ -26,6 +26,7 @@ export default function ProductsPage() {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [page, setPage] = useState(1);
+
   useEffect(() => {
     dispatch(actions.fetchItems({ search, sort, category, price, page }));
   }, [dispatch, search, sort, category, price, page]);

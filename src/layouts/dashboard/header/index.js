@@ -1,7 +1,9 @@
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, IconButton, Button } from '@mui/material';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 // components
@@ -11,13 +13,16 @@ import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
+import AuthContext from '../../../context/AuthProvider';
 
 Header.propTypes = {
   onOpenNav: PropTypes.func,
 };
 
-export default function Header({ onOpenNav, user = false }) {
-  const NAV_WIDTH = user ? 0 : 280;
+export default function Header({ onOpenNav }) {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const NAV_WIDTH = 0;
 
   const HEADER_MOBILE = 64;
 
@@ -59,13 +64,24 @@ export default function Header({ onOpenNav, user = false }) {
           direction="row"
           alignItems="center"
           spacing={{
-            xs: 0.5,
-            sm: 1,
+            xs: 1,
+            sm: 2,
           }}
         >
-          <LanguagePopover />
+          {/* <LanguagePopover /> */}
           <NotificationsPopover />
-          <AccountPopover />
+          {user ? (
+            <AccountPopover user={user} />
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={() => {
+                navigate('/macho-man-shop/login');
+              }}
+            >
+              login
+            </Button>
+          )}
         </Stack>
       </StyledToolbar>
     </StyledRoot>

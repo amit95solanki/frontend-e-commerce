@@ -39,7 +39,7 @@ const Main = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-function DashboardLayout() {
+export function DashboardLayout() {
   const [open, setOpen] = useState(false);
 
   const user = true;
@@ -64,8 +64,9 @@ const AuthPage = () => (
       <Route path="login" element={<LoginPage />} />
       <Route path="forget-password" element={<ForgetPassword />} />
       <Route path="sign-up/:emails" element={<SignupPage />} />
-      <Route path="products" element={<ProductsPage />} />
       <Route path="update-password/:token" element={<UpdatePassword />} />
+      <Route path="products" element={<ProductsPage />} />
+
       <Route path="/products/:id" element={<DetailView />} />
       <Route index element={<ProductsPage />} />
     </Route>

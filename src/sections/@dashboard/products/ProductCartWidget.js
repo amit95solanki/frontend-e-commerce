@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectItems } from '../../../pages/cart/_redux/cartSlice';
+import { selectItems } from '../../../pages/cart/cartSlice';
 // component
 import Iconify from '../../../components/iconify';
+import AuthContext from '../../../context/AuthProvider';
 
 // ----------------------------------------------------------------------
 
@@ -34,10 +35,12 @@ const StyledRoot = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CartWidget() {
+  const { user } = useContext(AuthContext);
+
   const items = useSelector(selectItems);
   return (
     <StyledRoot>
-      {items.length > 0 ? (
+      {items.length > 0 && user ? (
         <Badge showZero badgeContent={items.length} color="error" max={99}>
           <Link to="/cart">
             <Iconify icon="eva:shopping-cart-fill" width={24} height={24} />

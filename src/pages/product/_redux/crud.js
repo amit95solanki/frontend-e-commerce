@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // export const resource = 'http://localhost:8000/api/v1/product/all';
-export const resource = 'https://backend-e-commerce-amit.onrender.com/api/v1/product/all';
-export const resource1 = 'https://backend-e-commerce-amit.onrender.com/api/v1/product/';
+export const resource = '/product/all';
+export const resource1 = '/product/';
 export const resource2 = 'http://localhost:8000/api/v1/product/new?id=65f9677f36d5437f135e4e3b';
 // CREATE =>  POST: add a new item to the server
 export function createItem(data) {

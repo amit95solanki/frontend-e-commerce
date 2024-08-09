@@ -1,20 +1,13 @@
 import ReactDOM from 'react-dom/client';
+import axios from 'axios';
 import App from './App';
 // import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
-// import axios from 'axios';
+
 // ----------------------------------------------------------------------
-// import * as _redux from './sections/auth/_redux';
+import * as _redux from './redux';
 
-/**
- *
- *
- */
-
-// _redux.setupAxios(
-// axios
-// , store
-// );
+_redux.setupAxios(axios);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

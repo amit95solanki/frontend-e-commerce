@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { styled, Box, Typography, Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { addToCartAsync, selectItems } from '../../../cart/_redux/cartSlice';
+import { addToCartAsync, selectItems } from '../../../cart/cartSlice';
 
 import { ProductCartWidget } from '../../../../sections/@dashboard/products';
 import * as actions from '../../_redux/actions';
 import ProductDetail from './ProductDetail';
 import ActionItem from './ActionItem';
+import AuthContext from '../../../../context/AuthProvider';
 
 const Component = styled(Box)`
   margin-top: 55px;
@@ -32,6 +33,8 @@ const RightContainer = styled(Grid)`
 `;
 
 const DetailView = () => {
+  const { user } = useContext(AuthContext);
+
   const fassured = 'https://cdn2.vectorstock.com/i/1000x1000/66/21/assured-rubber-stamp-vector-17186621.jpg';
 
   const { id } = useParams();
@@ -55,13 +58,18 @@ const DetailView = () => {
   const product = data?.product;
 
   const handleCart = (product) => {
+    if (!user) {
+      alert('first go to login then add to wish card');
+      return;
+    }
+
     const isPresent = items.some((item) => item.product === product._id);
 
     if (!isPresent) {
       const newItem = {
         product: product._id,
         quantity: 1,
-        user: 'string',
+        user: user?.user?._id,
       };
       dispatch(addToCartAsync({ item: newItem }));
       alert('items add successfully');
