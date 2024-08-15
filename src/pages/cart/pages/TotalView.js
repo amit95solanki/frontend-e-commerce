@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import { Box, Typography, styled } from '@mui/material';
 
 const Header = styled(Box)`
@@ -42,32 +40,7 @@ const Discount = styled(Typography)`
 //     // width: '30%'
 // },
 
-const TotalView = ({ cartItems }) => {
-  const [price, setPrice] = useState(0);
-
-  const [totalItems, setTotalItems] = useState(0);
-
-  useEffect(() => {
-    totalAmount();
-  }, [cartItems]);
-
-  const totalAmount = () => {
-    let price = 0;
-
-    cartItems.forEach((item) => {
-      price += item.product.price * item.quantity;
-    });
-    setPrice(price);
-  };
-
-  useEffect(() => {
-    // const calculatedTotalAmount = items.reduce((amount, item) => item.product.price * item.quantity + amount, 0);
-    const calculatedTotalItems = cartItems.reduce((total, item) => item.quantity + total, 0);
-
-    setTotalItems(calculatedTotalItems);
-  }, [cartItems]);
-  console.log('cartItems', cartItems, '=====>', totalItems);
-
+const TotalView = ({ price, totalItems }) => {
   return (
     <Box>
       {' '}

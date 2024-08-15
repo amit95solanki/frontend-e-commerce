@@ -1,10 +1,12 @@
+import { useState, useEffect, useContext } from 'react';
 import { Box, Typography, Button, Grid, styled } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TotalView from './TotalView';
 import EmptyCart from './EmptyCart';
 import CartItem from './CartItem';
 
-import { selectItems } from '../cartSlice';
+import { fetchItemsByUserIdAsync, selectItems } from '../cartSlice';
+import AuthContext from '../../../context/AuthProvider';
 
 const Component = styled(Grid)(({ theme }) => ({
   padding: '30px 135px',
@@ -44,7 +46,41 @@ const StyledButton = styled(Button)`
 `;
 
 const Cart = () => {
+  const [price, setPrice] = useState(0);
+
+  const [totalItems, setTotalItems] = useState(0);
+
   const cartItems = useSelector(selectItems);
+  const { user } = useContext(AuthContext);
+
+  const dispatch = useDispatch();
+
+  console.log('user?.user?._id', user?.user?._id);
+
+  useEffect(() => {
+    dispatch(fetchItemsByUserIdAsync(user?.user?._id));
+  }, [dispatch]);
+
+  useEffect(() => {
+    totalAmount();
+  }, [cartItems]);
+
+  const totalAmount = () => {
+    let price = 0;
+
+    cartItems.forEach((item) => {
+      price += item.product.price * item.quantity;
+    });
+    setPrice(price);
+  };
+
+  useEffect(() => {
+    // const calculatedTotalAmount = items.reduce((amount, item) => item.product.price * item.quantity + amount, 0);
+    const calculatedTotalItems = cartItems.reduce((total, item) => item.quantity + total, 0);
+
+    setTotalItems(calculatedTotalItems);
+  }, [cartItems]);
+  console.log('cartItems', cartItems, '=====>', totalItems);
 
   const buyNow = async () => {};
 
@@ -66,7 +102,7 @@ const Cart = () => {
             </BottomWrapper>
           </LeftComponent>
           <Grid item lg={3} md={3} sm={12} xs={12}>
-            <TotalView cartItems={cartItems} />
+            <TotalView price={price} totalItems={totalItems} />
           </Grid>
         </Component>
       ) : (
